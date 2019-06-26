@@ -6,16 +6,69 @@
   vars:
     apache_listen_port_ssl: 443
     apache_create_vhosts: true
+    apache_ignore_missing_ssl_certificate: false
     apache_vhosts_filename: "vhosts.conf"
     apache_vhosts:
       - servername: "example.com"
         documentroot: "/var/www/vhosts/example_com"
+    apache_vhosts_individual:
+  # Additional properties:
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters, vhostname, directoryindex'.
+  # vhostname is the name minus the file extension of the vhost file used for this vhost configuration
+      - servername: "local.dev"
+        documentroot: "/var/www/html"
+        vhostname: "local.dev"
+      - servername: "myfedora.org"
+        documentroot: "/var/www/html"
+        vhostname: "myfedora.org"
+      - servername: "mycentos.net"
+        documentroot: "/var/www/html"
+        vhostname: "mycentos.net"
+        directoryindex: "mycentos.txt"
+      - servername: "myubuntu.com"
+        documentroot: "/var/www/html"
+        vhostname: "myubuntu.com"
+      - servername: "myubuntu.com"
+        documentroot: "/var/www/html"
+        vhostname: "myubuntu.com-ssl"
+        directoryindex: "myubuntu.txt"
+        certificate_file: "/var/www/html/myubuntu.crt"
+        certificate_key_file: "/var/www/html/server.key"
+      - servername: "local.org"
+        documentroot: "/var/www/html"
+        vhostname: "local.org-ssl"
+        certificate_file: "/var/www/html/local.crt"
+        certificate_key_file: "/var/www/html/server.key"
+# Additional properties (if using SSL):
+# 'certificate_file, certificate_key_file, certificate_chain_file'.
+#   certificate_file: "/path/to/certificate.crt",
+#   certificate_key_file: "/path/to/certificate.key",
+#   # Optional.
+#   certificate_chain_file: "/path/to/certificate_chain.crt"
 
   pre_tasks:
     - name: Update apt cache.
       apt: update_cache=yes cache_valid_time=600
       when: ansible_os_family == 'Debian'
       changed_when: false
+    - name: create web directory
+      file:
+        path: "/var/www/html"
+        state: directory
+    - name: install website index files
+      copy:
+        src: "files/{{ item }}"
+        dest: "/var/www/html/{{ item }}"
+      with_items:
+        - "mycentos.txt"
+        - "myubuntu.txt"
+    - name: install website certs and keys
+      copy:
+        src: "files/{{ item }}"
+        dest: "/var/www/html/{{ item }}"
+      with_items:
+        - "myubuntu.crt"
+        - "server.key"
 
   roles:
-    - role: geerlingguy.apache
+    - role: ansible-role-apache
