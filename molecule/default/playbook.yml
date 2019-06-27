@@ -45,14 +45,14 @@
     - name: install website index files
       copy:
         src: "files/{{ item }}"
-        dest: "/var/www/html/{{ item }}"
+        dest: "/var/www/html/"
       with_items:
         - "mycentos.txt"
         - "myubuntu.txt"
     - name: install website certs and keys
       copy:
         src: "files/{{ item }}"
-        dest: "/root/{{ item }}"
+        dest: "/root/"
       with_items:
         - "www.ubuntu.com.crt"
         - "cert.key"
