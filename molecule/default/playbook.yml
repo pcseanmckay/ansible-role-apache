@@ -12,9 +12,6 @@
       - servername: "example.com"
         documentroot: "/var/www/vhosts/example_com"
     apache_vhosts_individual:
-  # Additional properties:
-  # 'serveradmin, serveralias, allow_override, options, extra_parameters, vhostname, directoryindex'.
-  # vhostname is the name minus the file extension of the vhost file used for this vhost configuration
       - servername: "local.dev"
         documentroot: "/var/www/html"
         vhostname: "local.dev"
@@ -34,17 +31,11 @@
         directoryindex: "myubuntu.txt"
         certificate_file: "/root/myubuntu.crt"
         certificate_key_file: "/root/server.key"
-      - servername: "local.org"
-        documentroot: "/var/www/html"
-        vhostname: "local.org-ssl"
-        certificate_file: "/root/local.crt"
-        certificate_key_file: "/root/server.key"
-# Additional properties (if using SSL):
-# 'certificate_file, certificate_key_file, certificate_chain_file'.
-#   certificate_file: "/path/to/certificate.crt",
-#   certificate_key_file: "/path/to/certificate.key",
-#   # Optional.
-#   certificate_chain_file: "/path/to/certificate_chain.crt"
+        # - servername: "local.org"
+        #  documentroot: "/var/www/html"
+        #  vhostname: "local.org-ssl"
+        #  certificate_file: "/root/local.crt"
+        #  certificate_key_file: "/root/server.key"
 
   pre_tasks:
     - name: Update apt cache.
