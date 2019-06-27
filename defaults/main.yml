@@ -11,6 +11,7 @@ apache_vhosts_filename: "vhosts.conf"
 apache_vhost_filename_extension: "vhost.conf"
 apache_vhosts_template: "vhosts.conf.j2"
 apache_vhosts_individual_template: "vhosts.individual.conf.j2"
+apache_vhosts_individual_ssl_template: "vhosts.individual.ssl.conf.j2"
 
 # On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
 # Set this to `true` to remove that default.
@@ -45,6 +46,14 @@ apache_vhosts_individual:
   - servername: "local.dev"
     documentroot: "/var/www/html"
     vhostname: "vhost"
+
+apache_vhosts_individual_ssl:
+  # Additional properties:
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters, vhostname, directoryindex'.
+  # vhostname is the name minus the file extension of the vhost file used for this vhost configuration
+  - servername: "local.dev"
+    documentroot: "/var/www/html"
+    vhostname: "vhost-ssl"
 # Additional properties (if using SSL):
 # 'certificate_file, certificate_key_file, certificate_chain_file'.
 #   certificate_file: "/path/to/certificate.crt",
