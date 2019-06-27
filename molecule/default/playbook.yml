@@ -29,13 +29,13 @@
         documentroot: "/var/www/html"
         vhostname: "myubuntu.com-ssl"
         directoryindex: "myubuntu.txt"
-        certificate_file: "/root/myubuntu.crt"
-        certificate_key_file: "/root/server.key"
-        # - servername: "local.org"
-        #  documentroot: "/var/www/html"
-        #  vhostname: "local.org-ssl"
-        #  certificate_file: "/root/local.crt"
-        #  certificate_key_file: "/root/server.key"
+        certificate_file: "/root/www.ubuntu.com.crt"
+        certificate_key_file: "/root/cert.key"
+      - servername: "local.org"
+        documentroot: "/var/www/html"
+        vhostname: "local.org-ssl"
+        certificate_file: "/root/local.crt"
+        certificate_key_file: "/root/cert.key"
 
   pre_tasks:
     - name: Update apt cache.
@@ -54,8 +54,8 @@
         src: "files/{{ item }}"
         dest: "/root/{{ item }}"
       with_items:
-        - "myubuntu.crt"
-        - "server.key"
+        - "www.ubuntu.com.crt"
+        - "cert.key"
 
   roles:
     - role: ansible-role-apache
