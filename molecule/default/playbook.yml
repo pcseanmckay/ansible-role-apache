@@ -25,6 +25,7 @@
       - servername: "myubuntu.com"
         documentroot: "/var/www/html"
         vhostname: "myubuntu.com"
+    apache_vhosts_individual_ssl:
       - servername: "myubuntu.com"
         documentroot: "/var/www/html"
         vhostname: "myubuntu.com-ssl"
